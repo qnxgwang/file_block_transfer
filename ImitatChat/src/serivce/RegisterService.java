@@ -9,6 +9,11 @@ import util.MessageType;
 import util.SocketUtil;
 
 public class RegisterService {
+	/**
+	 * ÓÃ»§×¢²á
+	 * @param user
+	 * @return
+	 */
 	public boolean register(User user) {		    
 		try {
 			Socket socket = new Socket(IpUtil.getIpUtil().getIp(),IpUtil.getIpUtil().getPort());

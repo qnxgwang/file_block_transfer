@@ -73,7 +73,7 @@ public class LoginView extends JFrame{
 				LoginService loginService = new LoginService();
                 if(loginService.login(user)) {
                 	LoginView.this.dispose();
-                	FriendListView friendListView = new FriendListView(user.getRealname());
+                	FriendListView friendListView = new FriendListView(user.getUsername());
                 	friendListView.createFrame();
                 }
                 else {

@@ -2,12 +2,9 @@ package serivce;
 
 import java.awt.FlowLayout;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,6 +12,7 @@ import javax.swing.JPanel;
 
 import dao.UserDao;
 import entity.Message;
+import entity.User;
 import util.MessageType;
 import util.SocketUtil;
 
@@ -70,6 +68,20 @@ public class UserService extends JFrame{
 					}
 					else {
 						responseMessage.setMessageType(MessageType.REGISTER_FAILURE);
+					}
+					SocketUtil.getSocketUtil().writeMessage(socket, responseMessage);
+					break;
+				}
+				case MessageType.GET_FRIEND_LIST:{
+					Message responseMessage = new Message();
+					User user = requestMessage.getUser();
+					List<User> userList =  userDao.getFriendListByUsername(user.getUsername());
+					if(userList != null) {
+						responseMessage.setUserList(userList);
+						responseMessage.setMessageType(MessageType.GET_FRIEND_LIST_SUCCESS);
+					}
+					else {
+						responseMessage.setMessageType(MessageType.GET_FRIEND_LIST_FAILURE);
 					}
 					SocketUtil.getSocketUtil().writeMessage(socket, responseMessage);
 					break;
