@@ -17,7 +17,7 @@ public class GetFriendByUsernameService {
 	 */
 	public List<User> getFriendByUsername(String username){
 		try {
-			Socket socket = new Socket(IpUtil.getIpUtil().getIp(),IpUtil.getIpUtil().getPort());
+			Socket socket = new Socket(IpUtil.getIp(),IpUtil.getOrderPort());
 			User user = new User();
 			user.setUsername(username);
 			Message requestMessage = new Message();

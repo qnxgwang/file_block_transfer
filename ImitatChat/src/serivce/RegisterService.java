@@ -16,7 +16,7 @@ public class RegisterService {
 	 */
 	public boolean register(User user) {		    
 		try {
-			Socket socket = new Socket(IpUtil.getIpUtil().getIp(),IpUtil.getIpUtil().getPort());
+			Socket socket = new Socket(IpUtil.getIp(),IpUtil.getOrderPort());
 			Message requestMessage = new Message();
 			requestMessage.setMessageType(MessageType.REGISTER);
 			requestMessage.setUser(user);

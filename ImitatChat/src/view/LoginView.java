@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import Thread.DataThread;
 import entity.User;
 import serivce.LoginService;
 
@@ -72,9 +73,11 @@ public class LoginView extends JFrame{
 				user.setPwd(pwdJPasswordFiled.getText());
 				LoginService loginService = new LoginService();
                 if(loginService.login(user)) {
-                	LoginView.this.dispose();
-                	FriendListView friendListView = new FriendListView(user.getUsername());
+                	LoginView.this.dispose();                	
+                	FriendListView friendListView = new FriendListView(user.getUsername(),loginService.getUserList());
                 	friendListView.createFrame();
+                	DataThread dataThread = new DataThread(loginService.getDataSocket(),friendListView);
+                	dataThread.start();
                 }
                 else {
                 	JOptionPane.showMessageDialog(LoginView.this, "’À∫≈ªÚ√‹¬Î¥ÌŒÛ");

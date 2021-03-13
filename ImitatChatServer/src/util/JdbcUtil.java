@@ -31,7 +31,7 @@ public class JdbcUtil {
 	 * 获取数据库连接
 	 */
 	public Connection getConnection() throws SQLException{
-		return DriverManager.getConnection(PropertiesUtil.getPropertiesUtil().getValue("url"),PropertiesUtil.getPropertiesUtil().getValue("username"),PropertiesUtil.getPropertiesUtil().getValue("pwd"));
+		return DriverManager.getConnection(PropertiesUtil.getPropertiesUtil().getValue("url_qq"),PropertiesUtil.getPropertiesUtil().getValue("username"),PropertiesUtil.getPropertiesUtil().getValue("pwd"));
 	}
 	/**
 	 * 关闭数据库连接
