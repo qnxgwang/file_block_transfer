@@ -17,7 +17,6 @@ public class DataDao {
 	 * @param chatContent
 	 */
 	public void insertData(ChatContent chatContent) {
-		System.out.println("执行insertData"+" "+"参数@content="+chatContent.getContent());
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
@@ -42,34 +41,57 @@ public class DataDao {
 	 * @return
 	 */
 	public List<ChatContent> queryData(String username,String friendname) {
-		System.out.println("执行queryData"+" "+"参数@username="+username);
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		List<ChatContent> contentList = null;
 		try {
 			connection = JdbcUtil.getJdbcUtil().getConnection();
-			StringBuffer stringBuffer = new StringBuffer("select username,friendname,time,content from offline_message where username = ? & friendname = ?"); 
+			StringBuffer stringBuffer = new StringBuffer("select username,friendname,time,content from offline_message where username = ? && friendname = ?"); 
 			preparedStatement = connection.prepareStatement(stringBuffer.toString());
 			preparedStatement.setString(1, username);
 			preparedStatement.setString(2, friendname);
-			resultSet = preparedStatement.executeQuery();
+			resultSet = preparedStatement.executeQuery();	
 			contentList = new ArrayList<ChatContent>();
+			boolean flag = false; 
 			while(resultSet.next()) {
+				flag = true;
 				ChatContent content = new ChatContent();
 				content.setTimeStamp(resultSet.getString("time"));
 				content.setFrom(resultSet.getString("friendname"));
 				content.setTo(resultSet.getString("username"));
 				content.setContent(resultSet.getString("content"));
 				contentList.add(content);
-			}
-			return contentList;
+			}	
+			if(flag) {
+				return contentList;
+			}else {
+				return null;
+			}			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
 			JdbcUtil.getJdbcUtil().closeConnection(null, preparedStatement, connection);
 		}	
 		return null;
+	}
+	
+	/**
+	 * 删除离线信息
+	 * @param username
+	 */
+	public static void deleteData(String username) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		try {
+			connection = JdbcUtil.getJdbcUtil().getConnection();
+			StringBuffer stringBuffer = new StringBuffer("delete from offline_message where username = ?"); 
+			preparedStatement = connection.prepareStatement(stringBuffer.toString());
+			preparedStatement.setString(1, username);
+			preparedStatement.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

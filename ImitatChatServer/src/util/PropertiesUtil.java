@@ -6,6 +6,9 @@ import java.util.Properties;
 
 public class PropertiesUtil {
 
+	/**
+	 * 配置信息获取封装类
+	 */
 	private static PropertiesUtil propertiesUtil = null;
 	
 	private Properties properties;

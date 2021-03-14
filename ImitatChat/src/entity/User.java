@@ -67,6 +67,17 @@ public class User implements Serializable{
 	public void setOnlineFlag(boolean onlineFlag) {
 		this.onlineFlag = onlineFlag;
 	}
+	@Override
+    public String toString() {
+		String message = "";
+		if(contentList != null) {
+			for(ChatContent content: contentList) {
+				message += content.toString();
+			}
+		}
+		else message = "NULL";
+		
+    	return new String("User{username="+username+",onlineFlag="+onlineFlag+",chatContent=["+message+"]}");
+    }
 
-	
 }

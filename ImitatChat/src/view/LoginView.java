@@ -72,12 +72,13 @@ public class LoginView extends JFrame{
 				user.setUsername(usernameJTextField.getText());
 				user.setPwd(pwdJPasswordFiled.getText());
 				LoginService loginService = new LoginService();
-                if(loginService.login(user)) {
+                if(loginService.login(user)) {              	
                 	LoginView.this.dispose();                	
                 	FriendListView friendListView = new FriendListView(user.getUsername(),loginService.getUserList());
                 	friendListView.createFrame();
                 	DataThread dataThread = new DataThread(loginService.getDataSocket(),friendListView);
                 	dataThread.start();
+                	loginService.sendLoginMessageToFriend(usernameJTextField.getText());
                 }
                 else {
                 	JOptionPane.showMessageDialog(LoginView.this, "’À∫≈ªÚ√‹¬Î¥ÌŒÛ");

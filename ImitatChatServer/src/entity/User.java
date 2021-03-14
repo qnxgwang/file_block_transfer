@@ -17,6 +17,7 @@ public class User implements Serializable{
 	private ChatContent content;
 	private List<ChatContent> contentList;
 	private boolean onlineFlag;
+	
 	public int getId() {
 		return id;
 	}
@@ -47,6 +48,7 @@ public class User implements Serializable{
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
+	
 	public ChatContent getChatContent() {
 		return content;
 	}
@@ -65,7 +67,17 @@ public class User implements Serializable{
 	public void setOnlineFlag(boolean onlineFlag) {
 		this.onlineFlag = onlineFlag;
 	}
+	@Override
+    public String toString() {
+		String message = "";
+		if(contentList != null) {
+			for(ChatContent content: contentList) {
+				message += content.toString();
+			}
+		}
+		else message = "NULL";
+		
+    	return new String("User{username="+username+",onlineFlag="+onlineFlag+",chatContent=["+message+"]}");
+    }
 
-
-	
 }

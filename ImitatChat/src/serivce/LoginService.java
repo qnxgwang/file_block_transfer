@@ -10,11 +10,7 @@ import util.MessageType;
 import util.SocketUtil;
 
 public class LoginService {
-	/**
-	 * 用户登录
-	 * @param user
-	 * @return
-	 */
+
 	private Socket loginSocket = null;
 	private List<User> userList = null;
 	public Socket getDataSocket() {
@@ -23,6 +19,11 @@ public class LoginService {
 	public List<User> getUserList() {
 		return userList;
 	}
+	/**
+	 * 用户登录
+	 * @param user
+	 * @return
+	 */
 	public boolean login(User user) {	    
 		try {
 			Socket socket = new Socket(IpUtil.getIp(),IpUtil.getLoginPort());
@@ -42,5 +43,24 @@ public class LoginService {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	/**
+	 * 将登录信息发送给好友(服务器转发)
+	 * @param username
+	 */
+	public void sendLoginMessageToFriend(String  username) {
+		System.out.println("执行sendLoginMessageToFriend"+" "+"参数@username="+username);
+		try {
+			Socket socket = new Socket(IpUtil.getIp(),IpUtil.getOrderPort());
+			Message requestMessage = new Message();
+			User user = new User();
+			user.setUsername(username);
+			requestMessage.setMessageType(MessageType.LOGIN_TO_FRIEND);
+			requestMessage.setUser(user);
+			SocketUtil.getSocketUtil().writeMessage(socket, requestMessage);//向好友发送登录信息
+			socket.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

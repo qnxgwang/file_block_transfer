@@ -7,12 +7,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class JdbcUtil {
-    
+	/**
+	 * Jdbc连接数据库封装
+	 */
 	private static JdbcUtil jdbcUtil =null;
 	
 	private JdbcUtil() {
 		
 	}
+	
+	/**
+	 * 静态方法，直接通过类名调用
+	 * @return
+	 */
 	public static JdbcUtil getJdbcUtil() {
 		if(null==jdbcUtil) {
 			jdbcUtil = new JdbcUtil();

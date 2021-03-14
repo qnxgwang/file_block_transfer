@@ -2,8 +2,6 @@ package entity;
 
 import java.io.Serializable;
 
-import javax.swing.text.AbstractDocument.Content;
-
 public class ChatContent implements Serializable{
 	
 	private String timeStamp ;
@@ -33,6 +31,10 @@ public class ChatContent implements Serializable{
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	@Override
+	public String toString() {
+		return new String("(From="+From+",content="+content+")");
 	}
 	
 

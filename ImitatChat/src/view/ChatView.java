@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
@@ -16,7 +17,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.WindowConstants;
 import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
 import serivce.SendService;
@@ -28,6 +28,7 @@ public class ChatView extends JFrame{
 	private String myUsername = null;
 	public String friendUsername = null;
 	public JTextPane recordPanel;
+	public boolean closed = false;
 	
 	private ImageIcon headim_image = new ImageIcon("cuit1.jpg");
 	private ImageIcon camera_image = new ImageIcon("camera.png");
@@ -40,10 +41,10 @@ public class ChatView extends JFrame{
 		this.myUsername = myUsername;
 		this.friendUsername = friendUsername;
 	}
-	public static void main(String [] args) {
-		ChatView v = new ChatView(null,null);
-				v.createFrame();
-	}
+
+	/**
+	 * 创建面板
+	 */
 	public void createFrame() {
 		this.setTitle("Chat-Room:"+" "+this.myUsername+" "+"to"+" "+this.friendUsername);
 		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -90,8 +91,14 @@ public class ChatView extends JFrame{
 			    }			    
 			}       	
         });
-		this.add(send);
-			
+        this.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(java.awt.event.WindowEvent e) {
+				super.windowClosed(e);
+				closed = true;//JFrame关闭后，设置closed关键字为true，用于FriendListView进行判断
+			}
+		});
+		this.add(send);		
 		this.setVisible(true);
 	}
 	/**
@@ -112,6 +119,5 @@ public class ChatView extends JFrame{
 		int height = (int)screensize.getHeight();
 		return height;
 	}
-	
 	
 }

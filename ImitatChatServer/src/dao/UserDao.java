@@ -18,7 +18,6 @@ public class UserDao {
 	 * @return
 	 */
 	public User login(String username,String pwd ) {
-		System.out.println("执行login"+" "+"参数@username="+username);
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -49,7 +48,6 @@ public class UserDao {
 	 * @return
 	 */
 	public User queryUserByUsername(String username) {
-		System.out.println("执行queryUserByUsername"+" "+"参数@username="+username);
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -76,7 +74,6 @@ public class UserDao {
 	 * @param user
 	 */
 	public void register(User user) {
-		System.out.println("执行register"+" "+"参数@username="+user.getUsername());
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
@@ -101,19 +98,17 @@ public class UserDao {
 	 * @return
 	 */
 	public List<User> getFriendListByUsername(String username){
-		System.out.println("执行getFriendListByUsername"+" "+"参数@username="+username);
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet  resultSet = null;
 		List<User> userList= null;
 		try {
 			connection = JdbcUtil.getJdbcUtil().getConnection();
-			StringBuffer stringBuffer = new StringBuffer("select username,photo,realname from user"); 
+			StringBuffer stringBuffer = new StringBuffer("select username,photo,realname from user where username != ?"); 
 			preparedStatement = connection.prepareStatement(stringBuffer.toString());
+			preparedStatement.setString(1, username);
 			resultSet = preparedStatement.executeQuery();
-			//if(resultSet.wasNull()) {
-				userList = new ArrayList<User>();
-			//}
+			userList = new ArrayList<User>();
 			while(resultSet.next()) {
 				User user =new User();
 				user.setUsername(resultSet.getString("username"));

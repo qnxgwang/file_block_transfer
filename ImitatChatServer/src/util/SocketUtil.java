@@ -20,12 +20,24 @@ public class SocketUtil {
 		
 		return socketUtil;
 	}
+	/**
+	 * socket发送数据方法
+	 * @param socket
+	 * @param responseMessage
+	 * @throws IOException
+	 */
 	public void writeMessage(Socket socket,Message responseMessage) throws IOException {
 		OutputStream outputStream = socket.getOutputStream();
 		ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
 		objectOutputStream.writeObject(responseMessage);
 	}
-	
+	/**
+	 * socket接收数据方法
+	 * @param socket
+	 * @return
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public Message readMessage(Socket socket) throws IOException, ClassNotFoundException {
 		InputStream inputStream = socket.getInputStream();
 		ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);		
